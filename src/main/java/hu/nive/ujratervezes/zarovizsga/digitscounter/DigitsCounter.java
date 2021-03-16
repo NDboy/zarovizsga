@@ -1,7 +1,7 @@
 package hu.nive.ujratervezes.zarovizsga.digitscounter;
 
-import java.util.HashSet;
-import java.util.Set;
+
+import java.util.stream.IntStream;
 
 public class DigitsCounter {
 
@@ -9,20 +9,12 @@ public class DigitsCounter {
         if (numberString == null) {
             return 0;
         }
-        Set<Integer> digits = new HashSet<>();
-        for (int i = 0; i < numberString.length(); i++) {
-            if (parseDigit(numberString.charAt(i)) != null) {
-                digits.add(parseDigit(numberString.charAt(i)));
-            }
-        }
-        return digits.size();
+        return (int)IntStream.range(0, numberString.length())
+                .map(numberString::charAt)
+                .distinct()
+                .filter(Character::isDigit)
+                .count();
     }
 
-    private Integer parseDigit(char c) {
-        if (Character.isDigit(c)) {
-            return Integer.parseInt(String.valueOf(c));
-        }
-        return null;
-    }
 
 }
